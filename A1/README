@@ -1,0 +1,22 @@
+Compilation:
+
+While in A1/ directory, run the following command to compile the program:
+	$ premake4 gmake
+	$ make
+	run the program by:
+	$ ./A1
+
+No change was made to the default premake4/make combination.
+The program was compiled an run on lab machine gl30.
+
+Manual:
+
+There are two addtional files:
+	Cell.cpp
+	Cell.hpp
+There are some addtional features:
+	1) Use the indicator colour slider to change its colour to your liking.
+	2) Hold the A key will turn the current active bar to white to better indicate
+           your position.
+	3) You can choose to reset the current cell by clicking on the Reset
+           Current Cell button or hold shift and then press R.
