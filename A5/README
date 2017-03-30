@@ -1,0 +1,126 @@
+Compilation:
+
+While in A5/ directory, run the following command to compile the program:
+	$ premake4 gmake
+	$ make
+Then while in A5/Assets
+	run the program by:
+	$ ../A5 texture.lua
+The produced image will be located in the Assets folder.
+
+No change was made to the default premake4/make combination.
+Two additional files (Perlin.cpp and Perlin.hpp) were added.
+The program was compiled an run on lab machine gl14.
+
+Manual:
+
+Note: The objective of Spatial parititioning was not implemented.
+
+Use the following command to generate image for each objective:
+
+	Additional Primitives
+		$ ../A5 add_primitives.lua
+
+	Reflection
+		$ ../A5 reflection.lua
+
+	Refraction
+		$ ../A5 refraction.lua
+
+	Depth of Field
+		$ ../A5 dof_ball1.lua
+		$ ../A5 dof_ball2.lua
+		$ ../A5 dof_ball3.lua
+
+	Adaptive Sampling
+		$ ../A5 ada_sampling.lua
+		$ ../A5 no_sampling.lua
+
+	Texture Mapping
+		$ ../A5 texture.lua
+
+	Bump Mapping
+		$ ../A5 bump.lua
+		$ ../A5 no_bump.lua
+		$ ../A5 bump_texture.lua
+		$ ../A5 no_bump_texture.lua
+
+	Soft Shadow
+		$ ../A5 soft_shadow.lua
+		$ ../A5 hard_shadow.lua
+
+	Spatial Partitioning
+	  Not implemented
+
+	Final Scene
+		$ ../A5 mad_moon.lua
+
+	Super Sampling(Note this is not an objective)
+		$ ../A5 sup_sampling.lua
+
+All above images had been rendered and stored in the Assets/Demo folder.
+
+The program will output progress percentage, starting time, finishing time, and duration in seconds.
+
+
+Adaptive sampling vs Super sampling
+On gl14, 
+	Rendering ada_sampling.lua took 17 seconds.
+	Rendering sup_sampling.lua took 37 seconds.
+	Rendering no_sampling.lua took 4 seconds.
+Note that the picture quality is worst for no_sampling, best for super sampling, 
+but super sampling and ada_sampling are very close. ada_sampling took less time.
+
+
+If you wish to use custom lua files, please note the following difference:
+
+Material from A4 
+	mat = gr.material(m_kd, m_ks, m_shininess)
+
+Material from A5
+	mat = gr.material(m_kd, m_ks, m_shininess, m_reflection, m_refraction, m_texture, m_bump)
+	m_reflection from 0.0 to 1.0, 0.0 means no reflection
+	m_refraction from 1.0 to 1.9, 1.0 means no refraction
+	m_texture from 0 to 4, 0 means no texture
+	m_bump from 0 to 2.0, 0 means no bumpness
+
+Light from A4
+	light = gr.light(position, color, falloff)
+
+Light from A5
+	light = gr.light(position, color, falloff, type)
+	type = 0 for point light source
+	type = 1 for area light source
+
+gr_render from A4
+	gr.render(scene_root, filename, width, height, eye, view, up, fovy, ambient, {lights})
+
+gr_render from A5
+	gr.render(scene_root, filename, width, height, eye, view, up, fovy, ambient, {lights}, focal, sampling_method, {textures})
+	set focal to 0 to disable depth of field
+	sampling_method = 0 for no sampling method
+	sampling_method = 1 for super sampling method
+	sampling_method = 2 for adaptive sampling method
+	{textures} contains the list of the filenames of the textures
+	you can have maximum of 4 texture files.
+	the order of the textures corresponds to m_texture in material
+	if m_texture = 1, then that material will use the first texture file
+	in {textures}
+
+
+Resources:
+
+Perlin.hpp and Perlin.cpp which includes Perlin's noise algorithm
+is taken from https://www.ics.uci.edu/~gopi/CS211B/RayTracing%20tutorial.pdf
+
+texture1.png
+http://opengameart.org/node/22919
+
+texture2.png
+http://evasion.imag.fr/Membres/Sylvain.Lefebvre/pattern/
+
+texture3.png
+http://www.tutorialsforblender3d.com/Nature/Page5
+
+texture4.png
+http://kay-vriend.blogspot.ca/2012/10/tech-plate-texture.html
